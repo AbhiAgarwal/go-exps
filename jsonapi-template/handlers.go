@@ -4,7 +4,7 @@ import (
   "encoding/json"
   "net/http"
 
-  tasksModel "github.com/abhiagarwal/go-exps/jsonapi-template/models/tasks"
+  tasksModel "github.com/abhiagarwal/go-exps/jsonapi-template/models/models"
 
   "github.com/gorilla/context"
   "github.com/julienschmidt/httprouter"

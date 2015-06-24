@@ -1,4 +1,4 @@
-package tasks
+package models
 
 import (
   "gopkg.in/mgo.v2"
