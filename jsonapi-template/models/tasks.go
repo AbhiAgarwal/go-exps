@@ -15,17 +15,17 @@ type tasksCollection struct {
   Data []task `json:"data"`
 }
 
-type taskResource struct {
+type TaskResource struct {
   Data task `json:"data"`
 }
 
-type taskRepo struct {
-  coll *mgo.Collection
+type TaskRepo struct {
+  Coll *mgo.Collection
 }
 
-func (r *taskRepo) All() (tasksCollection, error) {
+func (r *TaskRepo) All() (tasksCollection, error) {
   result := tasksCollection{[]task{}}
-  err := r.coll.Find(nil).All(&result.Data)
+  err := r.Coll.Find(nil).All(&result.Data)
   if err != nil {
     return result, err
   }
@@ -33,9 +33,9 @@ func (r *taskRepo) All() (tasksCollection, error) {
   return result, nil
 }
 
-func (r *taskRepo) Find(id string) (taskResource, error) {
-  result := taskResource{}
-  err := r.coll.FindId(bson.ObjectIdHex(id)).One(&result.Data)
+func (r *TaskRepo) Find(id string) (TaskResource, error) {
+  result := TaskResource{}
+  err := r.Coll.FindId(bson.ObjectIdHex(id)).One(&result.Data)
   if err != nil {
     return result, err
   }
@@ -43,9 +43,9 @@ func (r *taskRepo) Find(id string) (taskResource, error) {
   return result, nil
 }
 
-func (r *taskRepo) Create(task *task) error {
+func (r *TaskRepo) Create(task *task) error {
   id := bson.NewObjectId()
-  _, err := r.coll.UpsertId(id, task)
+  _, err := r.Coll.UpsertId(id, task)
   if err != nil {
     return err
   }
@@ -55,8 +55,8 @@ func (r *taskRepo) Create(task *task) error {
   return nil
 }
 
-func (r *taskRepo) Update(task *task) error {
-  err := r.coll.UpdateId(task.Id, task)
+func (r *TaskRepo) Update(task *task) error {
+  err := r.Coll.UpdateId(task.Id, task)
   if err != nil {
     return err
   }
@@ -64,8 +64,8 @@ func (r *taskRepo) Update(task *task) error {
   return nil
 }
 
-func (r *taskRepo) Delete(id string) error {
-  err := r.coll.RemoveId(bson.ObjectIdHex(id))
+func (r *TaskRepo) Delete(id string) error {
+  err := r.Coll.RemoveId(bson.ObjectIdHex(id))
   if err != nil {
     return err
   }

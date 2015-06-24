@@ -4,7 +4,7 @@ import (
   "encoding/json"
   "net/http"
 
-  tasksModel "github.com/abhiagarwal/go-exps/jsonapi-template/models/models"
+  tasksModel "github.com/abhiagarwal/go-exps/jsonapi-template/models"
 
   "github.com/gorilla/context"
   "github.com/julienschmidt/httprouter"
@@ -41,7 +41,7 @@ func (c *appContext) register() {
 }
 
 func (c *appContext) tasksHandler(w http.ResponseWriter, r *http.Request) {
-  repo := tasksModel.taskRepo{c.db.C("tasks")}
+  repo := tasksModel.TaskRepo{c.db.C("tasks")}
   tasks, err := repo.All()
   if err != nil {
     panic(err)
@@ -53,7 +53,7 @@ func (c *appContext) tasksHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *appContext) taskHandler(w http.ResponseWriter, r *http.Request) {
   params := context.Get(r, "params").(httprouter.Params)
-  repo := tasksModel.taskRepo{c.db.C("tasks")}
+  repo := tasksModel.TaskRepo{c.db.C("tasks")}
   task, err := repo.Find(params.ByName("id"))
   if err != nil {
     panic(err)
@@ -64,8 +64,8 @@ func (c *appContext) taskHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *appContext) createtaskHandler(w http.ResponseWriter, r *http.Request) {
-  body := context.Get(r, "body").(*taskResource)
-  repo := tasksModel.taskRepo{c.db.C("tasks")}
+  body := context.Get(r, "body").(*tasksModel.TaskResource)
+  repo := tasksModel.TaskRepo{c.db.C("tasks")}
   err := repo.Create(&body.Data)
   if err != nil {
     panic(err)
@@ -78,9 +78,9 @@ func (c *appContext) createtaskHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *appContext) updatetaskHandler(w http.ResponseWriter, r *http.Request) {
   params := context.Get(r, "params").(httprouter.Params)
-  body := context.Get(r, "body").(*taskResource)
+  body := context.Get(r, "body").(*tasksModel.TaskResource)
   body.Data.Id = bson.ObjectIdHex(params.ByName("id"))
-  repo := tasksModel.taskRepo{c.db.C("tasks")}
+  repo := tasksModel.TaskRepo{c.db.C("tasks")}
   err := repo.Update(&body.Data)
   if err != nil {
     panic(err)
@@ -92,7 +92,7 @@ func (c *appContext) updatetaskHandler(w http.ResponseWriter, r *http.Request) {
 
 func (c *appContext) deletetaskHandler(w http.ResponseWriter, r *http.Request) {
   params := context.Get(r, "params").(httprouter.Params)
-  repo := tasksModel.taskRepo{c.db.C("tasks")}
+  repo := tasksModel.TaskRepo{c.db.C("tasks")}
   err := repo.Delete(params.ByName("id"))
   if err != nil {
     panic(err)
