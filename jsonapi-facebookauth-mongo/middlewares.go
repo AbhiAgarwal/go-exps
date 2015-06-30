@@ -2,24 +2,24 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"reflect"
 	"time"
-	"fmt"
-	"io/ioutil"
 
+	"github.com/gorilla/context"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
-	"github.com/gorilla/context"
 )
 
 var facebookconf = &oauth2.Config{
-  ClientID:     "509424122546702",
-  ClientSecret: "e69efc763ed78440c9566bd81568077e",
-  RedirectURL:  "http://lvh.me:8080/facebook",
-  Scopes: []string{},
-  Endpoint: facebook.Endpoint,
+	ClientID:     "509424122546702",
+	ClientSecret: "e69efc763ed78440c9566bd81568077e",
+	RedirectURL:  "http://lvh.me:8080/facebook",
+	Scopes:       []string{},
+	Endpoint:     facebook.Endpoint,
 }
 
 func recoverHandler(next http.Handler) http.Handler {
