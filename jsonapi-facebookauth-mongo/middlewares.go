@@ -102,6 +102,7 @@ func bodyHandler(v interface{}) func(http.Handler) http.Handler {
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	url := facebookconf.AuthCodeURL("state")
 	http.Redirect(w, r, url, 301)
+	return
 }
 
 func facebookHandler(w http.ResponseWriter, r *http.Request) {
@@ -110,10 +111,10 @@ func facebookHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("err is", err)
 		}
-		fmt.Println("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
 		response, err := http.Get("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
 		defer response.Body.Close()
 		contents, err := ioutil.ReadAll(response.Body)
 		fmt.Print(string(contents))
 	}
+	return
 }
