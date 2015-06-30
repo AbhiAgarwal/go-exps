@@ -100,8 +100,8 @@ func bodyHandler(v interface{}) func(http.Handler) http.Handler {
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-  url := facebookconf.AuthCodeURL("state")
-  http.Redirect(w, r, url, 301)
+	url := facebookconf.AuthCodeURL("state")
+	http.Redirect(w, r, url, 301)
 }
 
 func facebookHandler(w http.ResponseWriter, r *http.Request) {
