@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"io/ioutil"
 
-  "golang.org/x/oauth2"
-  "golang.org/x/oauth2/facebook"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/facebook"
 	"github.com/gorilla/context"
 )
 
