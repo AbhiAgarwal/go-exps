@@ -108,12 +108,12 @@ func facebookHandler(w http.ResponseWriter, r *http.Request) {
 	if val, ok := r.URL.Query()["code"]; ok && len(val) > 0 {
 		tok, err := facebookconf.Exchange(oauth2.NoContext, val[0])
 		if err != nil {
-        fmt.Println("err is", err)
-    }
-    fmt.Println("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
-    response, err := http.Get("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
-    defer response.Body.Close()
-    contents, err := ioutil.ReadAll(response.Body)
-    fmt.Print(string(contents))
+			fmt.Println("err is", err)
+		}
+		fmt.Println("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
+		response, err := http.Get("https://graph.facebook.com/v2.3/me?access_token=" + tok.AccessToken)
+		defer response.Body.Close()
+		contents, err := ioutil.ReadAll(response.Body)
+		fmt.Print(string(contents))
 	}
 }
